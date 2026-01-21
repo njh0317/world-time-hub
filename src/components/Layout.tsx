@@ -1,8 +1,9 @@
-import { Outlet, NavLink } from 'react-router-dom';
+import { Outlet, NavLink, useLocation } from 'react-router-dom';
 import { useStore } from '../store';
 import { useEffect, useState } from 'react';
 import { useTranslation, detectBrowserLanguage } from '../i18n/useTranslation';
 import type { Language } from '../i18n/translations';
+import { updatePageSEO } from '../utils/seo';
 
 const langLabels: Record<Language, string> = {
   ko: '🇰🇷 한국어',
@@ -20,6 +21,7 @@ export function Layout() {
   const { settings, updateSettings } = useStore();
   const { t, lang, setLang } = useTranslation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     if (!localStorage.getItem('world-time-hub-storage')) {
@@ -39,6 +41,11 @@ export function Layout() {
       root.classList.toggle('dark', prefersDark);
     }
   }, [settings.theme]);
+
+  // Update SEO on route or language change
+  useEffect(() => {
+    updatePageSEO(location.pathname, lang);
+  }, [location.pathname, lang]);
 
   const navItems = [
     { path: '/', label: t.nav.worldClock, icon: '🌍' },
@@ -124,7 +131,7 @@ export function Layout() {
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="text-sm text-gray-500 dark:text-gray-400">
-              © 2026 World Time Hub
+              © 2025 World Time Hub
             </div>
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
