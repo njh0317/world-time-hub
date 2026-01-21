@@ -6,37 +6,58 @@ import { useTranslation } from '../i18n/useTranslation';
 
 export function TimerPage() {
   const { t } = useTranslation();
-  const { timer, setTimerDuration, startTimer, pauseTimer, resetTimer, updateTimerTime } = useStore();
+  const { timer, setTimerDuration, startTimer, pauseTimer, resetTimer } = useStore();
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(5);
   const [seconds, setSeconds] = useState(0);
   const [showAlert, setShowAlert] = useState(false);
+  const [displayTime, setDisplayTime] = useState(timer.remainingMs);
+  const endTimeRef = useRef<number | null>(timer.endTime);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    let animationId: number;
-    const update = () => {
-      updateTimerTime();
-      animationId = requestAnimationFrame(update);
-    };
-    if (timer.isRunning) {
-      animationId = requestAnimationFrame(update);
+    endTimeRef.current = timer.endTime;
+    if (!timer.isRunning) {
+      setDisplayTime(timer.remainingMs);
     }
-    return () => cancelAnimationFrame(animationId);
-  }, [timer.isRunning, updateTimerTime]);
+  }, [timer.endTime, timer.isRunning, timer.remainingMs]);
 
   useEffect(() => {
-    if (timer.initialMs > 0 && timer.remainingMs === 0 && !timer.isRunning) {
+    let intervalId: number;
+    if (timer.isRunning && endTimeRef.current) {
+      intervalId = window.setInterval(() => {
+        if (endTimeRef.current) {
+          const remaining = Math.max(0, endTimeRef.current - Date.now());
+          setDisplayTime(remaining);
+          if (remaining === 0) {
+            // Timer completed
+            useStore.setState((state) => ({
+              timer: {
+                ...state.timer,
+                remainingMs: 0,
+                isRunning: false,
+              },
+            }));
+          }
+        }
+      }, 100); // Update every 100ms is enough for timer
+    }
+    return () => clearInterval(intervalId);
+  }, [timer.isRunning]);
+
+  useEffect(() => {
+    if (timer.initialMs > 0 && displayTime === 0 && !timer.isRunning) {
       setShowAlert(true);
       audioRef.current?.play().catch(() => {});
     }
-  }, [timer.remainingMs, timer.isRunning, timer.initialMs]);
+  }, [displayTime, timer.isRunning, timer.initialMs]);
 
   const handleStart = () => {
-    if (timer.remainingMs === 0) {
+    if (displayTime === 0 && timer.remainingMs === 0) {
       const ms = parseTimeInput(hours, minutes, seconds);
       if (ms > 0) {
         setTimerDuration(ms);
+        setDisplayTime(ms);
         setTimeout(() => startTimer(), 0);
       }
     } else {
@@ -47,6 +68,7 @@ export function TimerPage() {
 
   const handlePreset = (ms: number) => {
     setTimerDuration(ms);
+    setDisplayTime(ms);
     const totalSeconds = ms / 1000;
     setHours(Math.floor(totalSeconds / 3600));
     setMinutes(Math.floor((totalSeconds % 3600) / 60));
@@ -55,18 +77,20 @@ export function TimerPage() {
 
   const handleReset = () => {
     resetTimer();
+    setDisplayTime(timer.initialMs);
     setShowAlert(false);
   };
 
   const handleClear = () => {
     setTimerDuration(0);
+    setDisplayTime(0);
     setHours(0);
     setMinutes(5);
     setSeconds(0);
     setShowAlert(false);
   };
 
-  const isIdle = timer.remainingMs === 0 && timer.initialMs === 0;
+  const isIdle = displayTime === 0 && timer.initialMs === 0;
 
   return (
     <div className="max-w-2xl mx-auto">
@@ -85,15 +109,15 @@ export function TimerPage() {
             <div className="mt-4 sm:mt-6"><PresetButtons onSelect={handlePreset} /></div>
           </div>
         ) : (
-          <div className="text-4xl sm:text-6xl md:text-7xl font-mono font-bold text-blue-600 dark:text-blue-400 py-4 sm:py-8">{formatRemainingTime(timer.remainingMs)}</div>
+          <div className="text-4xl sm:text-6xl md:text-7xl font-mono font-bold text-blue-600 dark:text-blue-400 py-4 sm:py-8">{formatRemainingTime(displayTime)}</div>
         )}
         <div className="flex justify-center gap-2 sm:gap-4 flex-wrap">
           {!timer.isRunning ? (
-            <button onClick={handleStart} className="btn-primary px-6 sm:px-8 py-2 sm:py-3 text-base sm:text-lg">{timer.remainingMs > 0 ? t.common.continue : t.common.start}</button>
+            <button onClick={handleStart} className="btn-primary px-6 sm:px-8 py-2 sm:py-3 text-base sm:text-lg">{displayTime > 0 ? t.common.continue : t.common.start}</button>
           ) : (
             <button onClick={pauseTimer} className="btn-secondary px-6 sm:px-8 py-2 sm:py-3 text-base sm:text-lg">{t.common.pause}</button>
           )}
-          {(timer.remainingMs > 0 || timer.initialMs > 0) && !timer.isRunning && (
+          {(displayTime > 0 || timer.initialMs > 0) && !timer.isRunning && (
             <>
               <button onClick={handleReset} className="btn-secondary px-6 sm:px-8 py-2 sm:py-3 text-base sm:text-lg">{t.common.reset}</button>
               <button onClick={handleClear} className="btn-secondary px-6 sm:px-8 py-2 sm:py-3 text-base sm:text-lg text-red-500">{t.common.newSetting}</button>
