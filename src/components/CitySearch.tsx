@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import type { City } from '../types';
 import { getCities } from '../data/cities';
 import { searchCities } from '../utils/search';
@@ -14,7 +14,8 @@ export function CitySearch() {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const { addCity, selectedCities } = useStore();
 
-  const cities = getCities(lang);
+  // Memoize cities to prevent infinite loop
+  const cities = useMemo(() => getCities(lang), [lang]);
 
   useEffect(() => {
     if (query.trim()) {

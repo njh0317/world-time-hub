@@ -1,6 +1,35 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Suspense, lazy } from 'react';
+import { Suspense, lazy, Component, type ReactNode } from 'react';
 import { Layout } from './components/Layout';
+
+// Error Boundary for lazy loading failures
+class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boolean }> {
+  constructor(props: { children: ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="flex flex-col items-center justify-center min-h-[200px] text-center">
+          <p className="text-red-500 mb-4">페이지 로딩 중 오류가 발생했습니다.</p>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          >
+            새로고침
+          </button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 
 // Lazy load all pages for code splitting
 const WorldClockPage = lazy(() => import('./pages/WorldClockPage').then(m => ({ default: m.WorldClockPage })));
@@ -21,20 +50,30 @@ function PageLoader() {
   );
 }
 
+function LazyPage({ children }: { children: ReactNode }) {
+  return (
+    <ErrorBoundary>
+      <Suspense fallback={<PageLoader />}>
+        {children}
+      </Suspense>
+    </ErrorBoundary>
+  );
+}
+
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<Suspense fallback={<PageLoader />}><WorldClockPage /></Suspense>} />
-          <Route path="map" element={<Suspense fallback={<PageLoader />}><TimezoneMapPage /></Suspense>} />
-          <Route path="converter" element={<Suspense fallback={<PageLoader />}><ConverterPage /></Suspense>} />
-          <Route path="dst" element={<Suspense fallback={<PageLoader />}><DSTInfoPage /></Suspense>} />
-          <Route path="timezones" element={<Suspense fallback={<PageLoader />}><TimezoneListPage /></Suspense>} />
-          <Route path="clock" element={<Suspense fallback={<PageLoader />}><OnlineClockPage /></Suspense>} />
-          <Route path="stopwatch" element={<Suspense fallback={<PageLoader />}><StopwatchPage /></Suspense>} />
-          <Route path="timer" element={<Suspense fallback={<PageLoader />}><TimerPage /></Suspense>} />
-          <Route path="countdown" element={<Suspense fallback={<PageLoader />}><CountdownPage /></Suspense>} />
+          <Route index element={<LazyPage><WorldClockPage /></LazyPage>} />
+          <Route path="map" element={<LazyPage><TimezoneMapPage /></LazyPage>} />
+          <Route path="converter" element={<LazyPage><ConverterPage /></LazyPage>} />
+          <Route path="dst" element={<LazyPage><DSTInfoPage /></LazyPage>} />
+          <Route path="timezones" element={<LazyPage><TimezoneListPage /></LazyPage>} />
+          <Route path="clock" element={<LazyPage><OnlineClockPage /></LazyPage>} />
+          <Route path="stopwatch" element={<LazyPage><StopwatchPage /></LazyPage>} />
+          <Route path="timer" element={<LazyPage><TimerPage /></LazyPage>} />
+          <Route path="countdown" element={<LazyPage><CountdownPage /></LazyPage>} />
         </Route>
       </Routes>
     </BrowserRouter>
