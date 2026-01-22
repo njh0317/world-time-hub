@@ -131,7 +131,7 @@ export function Layout() {
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="text-sm text-gray-500 dark:text-gray-400">
-              © 2025 World Time Hub
+              © 2026 wisdomslab.com
             </div>
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
