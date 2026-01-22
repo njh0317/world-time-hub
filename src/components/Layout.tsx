@@ -72,7 +72,8 @@ export function Layout() {
               >
                 {mobileMenuOpen ? '✕' : '☰'}
               </button>
-              <h1 className="text-lg sm:text-xl font-bold text-blue-600 dark:text-blue-400">
+              <h1 className="text-lg sm:text-xl font-bold text-blue-600 dark:text-blue-400 flex items-center gap-2">
+                <img src="/icon.png" alt="World Time Hub" className="w-6 h-6 sm:w-7 sm:h-7" />
                 <span className="hidden sm:inline">World Time Hub</span>
                 <span className="sm:hidden">WTH</span>
               </h1>
