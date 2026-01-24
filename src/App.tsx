@@ -41,6 +41,7 @@ const OnlineClockPage = lazy(() => import('./pages/OnlineClockPage').then(m => (
 const StopwatchPage = lazy(() => import('./pages/StopwatchPage').then(m => ({ default: m.StopwatchPage })));
 const TimerPage = lazy(() => import('./pages/TimerPage').then(m => ({ default: m.TimerPage })));
 const CountdownPage = lazy(() => import('./pages/CountdownPage').then(m => ({ default: m.CountdownPage })));
+const FAQPage = lazy(() => import('./pages/FAQPage').then(m => ({ default: m.FAQPage })));
 
 function PageLoader() {
   return (
@@ -74,6 +75,7 @@ function App() {
           <Route path="stopwatch" element={<LazyPage><StopwatchPage /></LazyPage>} />
           <Route path="timer" element={<LazyPage><TimerPage /></LazyPage>} />
           <Route path="countdown" element={<LazyPage><CountdownPage /></LazyPage>} />
+          <Route path="faq" element={<LazyPage><FAQPage /></LazyPage>} />
         </Route>
       </Routes>
     </BrowserRouter>

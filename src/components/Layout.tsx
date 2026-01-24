@@ -57,6 +57,7 @@ export function Layout() {
     { path: '/stopwatch', label: t.nav.stopwatch, icon: '⏱️' },
     { path: '/timer', label: t.nav.timer, icon: '⏲️' },
     { path: '/countdown', label: t.nav.countdown, icon: '🎯' },
+    { path: '/faq', label: t.nav.faq, icon: '❓' },
   ];
 
   return (

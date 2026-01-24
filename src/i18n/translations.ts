@@ -13,6 +13,7 @@ export const translations = {
       stopwatch: '스톱워치',
       timer: '타이머',
       countdown: '카운트다운',
+      faq: 'FAQ',
     },
     // Common
     common: {
@@ -113,6 +114,7 @@ export const translations = {
       stopwatch: 'Stopwatch',
       timer: 'Timer',
       countdown: 'Countdown',
+      faq: 'FAQ',
     },
     common: {
       search: 'Search...',
@@ -203,6 +205,7 @@ export const translations = {
       stopwatch: 'ストップウォッチ',
       timer: 'タイマー',
       countdown: 'カウントダウン',
+      faq: 'FAQ',
     },
     common: {
       search: '検索...',

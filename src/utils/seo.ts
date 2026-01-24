@@ -160,6 +160,23 @@ export const pageSEO: Record<string, PageSEO> = {
       ja: 'サマータイム, DST, 夏時間, アメリカサマータイム',
     },
   },
+  '/faq': {
+    title: {
+      ko: '자주 묻는 질문 (FAQ) | World Time Hub',
+      en: 'FAQ - Frequently Asked Questions | World Time Hub',
+      ja: 'よくある質問（FAQ） | World Time Hub',
+    },
+    description: {
+      ko: 'World Time Hub 사용법, 시간대 변환, 타이머, 스톱워치 등에 대한 자주 묻는 질문과 답변입니다.',
+      en: 'Frequently asked questions about World Time Hub, timezone converter, timer, stopwatch and more.',
+      ja: 'World Time Hubの使い方、タイムゾーン変換、タイマー、ストップウォッチなどに関するよくある質問と回答。',
+    },
+    keywords: {
+      ko: 'FAQ, 자주 묻는 질문, 도움말, 사용법',
+      en: 'FAQ, frequently asked questions, help, how to use',
+      ja: 'FAQ, よくある質問, ヘルプ, 使い方',
+    },
+  },
 };
 
 export function updatePageSEO(path: string, lang: Language) {
