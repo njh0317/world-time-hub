@@ -40,7 +40,7 @@
     <!-- Naver Search Advisor 인증 -->
     <meta name="naver-site-verification" content="65d07137039a93d2065e43a427708ec81708d2bf" />
     
-    <!-- Structured Data for SEO -->
+    <!-- Structured Data for SEO - WebApplication -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -50,11 +50,97 @@
       "url": "https://world-time-hub.wisdomslab.com",
       "applicationCategory": "UtilitiesApplication",
       "operatingSystem": "Any",
+      "inLanguage": ["en", "ko", "ja"],
       "offers": {
         "@type": "Offer",
         "price": "0",
         "priceCurrency": "USD"
-      }
+      },
+      "featureList": [
+        "World Clock - Check time in any city",
+        "Timezone Converter - Convert time between zones",
+        "Online Timer - Countdown timer with presets",
+        "Stopwatch - Lap time recording",
+        "D-day Calculator - Event countdown",
+        "Timezone Map - Interactive world map"
+      ]
+    }
+    </script>
+    
+    <!-- Structured Data - Organization -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "World Time Hub",
+      "url": "https://world-time-hub.wisdomslab.com",
+      "logo": "https://world-time-hub.wisdomslab.com/icon.png"
+    }
+    </script>
+    
+    <!-- Structured Data - FAQ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is World Time Hub?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "World Time Hub is a free online tool that provides world clock, timezone converter, timer, stopwatch, and countdown features. You can check current time in any city worldwide and convert time between different timezones."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I convert time between timezones?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use our Timezone Converter tool. Select the source timezone and target timezone, then enter the time you want to convert. The tool will instantly show you the converted time."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is World Time Hub free to use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, World Time Hub is completely free. All features including world clock, timezone converter, timer, stopwatch, and countdown are available at no cost."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What cities are available in the world clock?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "World Time Hub includes major cities worldwide such as New York, London, Tokyo, Seoul, Paris, Sydney, Dubai, Singapore, and many more. You can search and add any city to your world clock."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does World Time Hub support Daylight Saving Time (DST)?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, World Time Hub automatically accounts for Daylight Saving Time. Our DST Info page shows when DST starts and ends for different regions around the world."
+          }
+        }
+      ]
+    }
+    </script>
+    
+    <!-- Structured Data - BreadcrumbList -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://world-time-hub.wisdomslab.com/"},
+        {"@type": "ListItem", "position": 2, "name": "World Clock", "item": "https://world-time-hub.wisdomslab.com/"},
+        {"@type": "ListItem", "position": 3, "name": "Timezone Map", "item": "https://world-time-hub.wisdomslab.com/map"},
+        {"@type": "ListItem", "position": 4, "name": "Converter", "item": "https://world-time-hub.wisdomslab.com/converter"},
+        {"@type": "ListItem", "position": 5, "name": "Timer", "item": "https://world-time-hub.wisdomslab.com/timer"},
+        {"@type": "ListItem", "position": 6, "name": "Stopwatch", "item": "https://world-time-hub.wisdomslab.com/stopwatch"}
+      ]
     }
     </script>
   </head>
