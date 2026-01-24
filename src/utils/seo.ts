@@ -9,9 +9,9 @@ interface PageSEO {
 export const pageSEO: Record<string, PageSEO> = {
   '/': {
     title: {
-      ko: '세계 시계 - 뉴욕, 런던, 도쿄 현재 시간 | World Time Hub',
-      en: 'World Clock - Current Time in New York, London, Tokyo | World Time Hub',
-      ja: '世界時計 - ニューヨーク、ロンドン、東京の現在時刻 | World Time Hub',
+      ko: 'World Time Hub - 세계 시간 도구',
+      en: 'World Time Hub - World Clock & Time Tools',
+      ja: 'World Time Hub - 世界時計・時間ツール',
     },
     description: {
       ko: '세계 각국의 현재 시간을 실시간으로 확인하세요. 뉴욕, 런던, 도쿄, 서울 등 주요 도시의 시간과 시차 정보를 제공합니다.',
